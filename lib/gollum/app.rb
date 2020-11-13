@@ -20,6 +20,7 @@ require 'gollum/views/has_page'
 require 'gollum/views/has_user_icons'
 require 'gollum/views/pagination'
 require 'gollum/views/rss.rb'
+require 'gollum/views/sitemap.rb'
 
 require File.expand_path '../helpers', __FILE__
 
@@ -562,6 +563,21 @@ module Precious
         mustache :overview
       end
     end # gollum namespace
+
+    get %r{/sitemap.xml(\.gz)?} do
+      gzip = request.path.end_with?('gz')
+      url = "#{env['rack.url_scheme']}://#{env['HTTP_HOST']}"
+      wiki         = wiki_new
+      tree_list    = wiki.tree_list
+
+      gzip ? (content_type :gz) : (content_type :xml)
+
+      pages = tree_list.map{|e| wiki_page(e.path).page}
+      SitemapView.new(@wiki_title, env['HTTP_HOST'], pages, {
+        gzip: gzip,
+        secure: env['rack.url_scheme'] == 'https',
+        add_ext: true}).render
+    end
 
     get %r{/(.+?)/([0-9a-f]{40})} do
       file_path = params[:captures][0]

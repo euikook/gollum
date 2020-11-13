@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
 
   s.name              = 'gollum'
   s.version           = '5.1.1'
-  s.date              = '2020-08-11'
+  s.date              = '2020-11-13'
   s.license           = 'MIT'
 
   s.summary     = 'A simple, Git-powered wiki.'
@@ -1227,6 +1227,7 @@ Gem::Specification.new do |s|
     lib/gollum/views/pagination.rb
     lib/gollum/views/rss.rb
     lib/gollum/views/search.rb
+    lib/gollum/views/sitemap.rb
     licenses/licenses.txt
   ]
   # = MANIFEST =
