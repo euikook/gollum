@@ -163,6 +163,10 @@ MSG
   opts.on('--emoji', 'Parse and interpret emoji tags (e.g. :heart:) except when the leading colon is backslashed (e.g. \\:heart:).') do
     wiki_options[:emoji] = true
   end
+  opts.on('--sitemap', 'Generate sitemap from pages list.') do
+    wiki_options[:sitemap] = true
+  end
+
   opts.separator ''
   opts.separator '  Common:'
 

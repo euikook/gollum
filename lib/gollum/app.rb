@@ -118,6 +118,8 @@ module Precious
       @js  = settings.wiki_options[:js]
       @mathjax_config = settings.wiki_options[:mathjax_config]
 
+      @sitemap = settings.wiki_options[:sitemap] || false
+
       @use_static_assets = settings.wiki_options.fetch(:static, settings.environment == :production || settings.environment == :staging)
       @static_assets_path = settings.wiki_options.fetch(:static_assets_path, ::File.join(File.dirname(__FILE__), 'public/assets'))
       @mathjax_path = ::File.join(File.dirname(__FILE__), 'public/gollum/javascript/MathJax')
@@ -564,7 +566,10 @@ module Precious
       end
     end # gollum namespace
 
-    get %r{/sitemap.xml(\.gz)?} do
+
+    set(:sitemap) { |v| condition { @sitemap } }
+
+    get %r{/sitemap.xml(\.gz)?}, :sitemap => '' do
       gzip = request.path.end_with?('gz')
       url = "#{env['rack.url_scheme']}://#{env['HTTP_HOST']}"
       wiki         = wiki_new
